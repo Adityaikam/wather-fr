@@ -50,9 +50,14 @@ export default function Home() {
   };
 
   const handleDeleteCity = async (id: number) => {
+
     try {
-      await weatherService.deleteFavoriteCity(id);
-      setFavorites(favorites.filter((city) => city.id !== id));
+      // it shoudd haveboth optionsok and calcel
+      if (confirm("Are you sure you want to delete this city?")) {
+        setError("");
+        await weatherService.deleteFavoriteCity(id);
+        setFavorites(favorites.filter((city) => city.id !== id));
+      }
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to delete city");
     }
